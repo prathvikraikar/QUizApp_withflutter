@@ -25,6 +25,42 @@ class MyApp extends StatelessWidget {
   }
 }
 
+Widget question(String ques) {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Text(
+      ques,
+      style: TextStyle(fontSize: 30, color: Colors.amber[200]),
+    ),
+  );
+}
+
+Widget button2(
+  BuildContext context,
+  String str,
+  Widget Function() createPage,
+) {
+  return Container(
+    width: 300,
+    child: ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll(Colors.teal[400])),
+        onPressed: () {
+          if (str.contains("Dart") ||
+              str.contains("Stream") ||
+              str.contains("Statefull")) {
+            high = high! + 1;
+          } else {}
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return createPage();
+            },
+          ));
+        },
+        child: Text(str)),
+  );
+}
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -33,7 +69,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 int? high = 0;
-int best = high!;
+late int score = 0;
+int? best = 0;
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
@@ -63,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Padding(padding: EdgeInsets.only(top: 100)),
           Center(
             child: Text(
-              "High Score:$best",
+              "High Score: $best",
               textAlign: TextAlign.center,
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
             ),
@@ -86,9 +123,10 @@ class _MyHomePageState extends State<MyHomePage> {
               text: 'START QUIZ',
               isReverse: true,
               selectedTextColor: Colors.black,
+              selectedText: "Starting",
               transitionType: TransitionType.LEFT_TOP_ROUNDER,
               backgroundColor: Colors.black,
-              selectedBackgroundColor: Colors.lightGreen,
+              selectedBackgroundColor: const Color.fromARGB(255, 193, 195, 74),
               borderColor: Colors.white,
               borderWidth: 1,
             ),
@@ -97,16 +135,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-}
-
-Widget question(String ques) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Text(
-      ques,
-      style: TextStyle(fontSize: 30, color: Colors.amber[200]),
-    ),
-  );
 }
 
 class Quiz1 extends StatefulWidget {
@@ -180,32 +208,6 @@ class _Quiz2State extends State<Quiz2> {
       ),
     );
   }
-}
-
-Widget button2(
-  BuildContext context,
-  String str,
-  Widget Function() createPage,
-) {
-  return Container(
-    width: 300,
-    child: ElevatedButton(
-        style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Colors.teal[400])),
-        onPressed: () {
-          if (str.contains("Dart") ||
-              str.contains("Stream") ||
-              str.contains("Statefull")) {
-            high = high! + 1;
-          } else {}
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) {
-              return createPage();
-            },
-          ));
-        },
-        child: Text(str)),
-  );
 }
 
 class Quiz3 extends StatefulWidget {
@@ -303,7 +305,9 @@ class _ResultState extends State<Result> {
                       backgroundColor: MaterialStatePropertyAll(
                           Color.fromARGB(230, 237, 233, 238))),
                   onPressed: () {
-                    best = high!;
+                    if (high == 3) {
+                      best = 3;
+                    } else {}
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
                         return MyHomePage();
