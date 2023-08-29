@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
+import 'package:lottie/lottie.dart';
 
 void main() {
   runApp(MyApp());
@@ -98,6 +99,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: [
           Padding(padding: EdgeInsets.only(top: 100)),
+          Lottie.network(
+            "https://lottie.host/1f8daad7-697d-46b5-ad97-4ffa718d819f/bZtXjvbMXf.json",
+          ),
           Center(
             child: Text(
               "High Score: $best",
@@ -126,10 +130,13 @@ class _MyHomePageState extends State<MyHomePage> {
               selectedText: "Starting",
               transitionType: TransitionType.LEFT_TOP_ROUNDER,
               backgroundColor: Colors.black,
-              selectedBackgroundColor: const Color.fromARGB(255, 193, 195, 74),
+              selectedBackgroundColor: Color.fromARGB(255, 74, 195, 187),
               borderColor: Colors.white,
               borderWidth: 1,
             ),
+          ),
+          Lottie.network(
+            "https://lottie.host/076481bf-281a-4663-a60b-40710871ead8/eg7ORmEeJC.json",
           )
         ],
       ),
@@ -275,7 +282,17 @@ class _ResultState extends State<Result> {
       home: Scaffold(
         body: Column(
           children: [
-            Text(resultPhrase + "Your Score is $high",
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: double.infinity,
+                child: Image.asset(
+                  "animations/welldone.gif",
+                  width: double.infinity,
+                ),
+              ),
+            ),
+            Text(resultPhrase + '\nYour Score is $high',
                 style: TextStyle(
                   fontSize: 36.0,
                   fontWeight: FontWeight.bold,
