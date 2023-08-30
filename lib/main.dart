@@ -41,10 +41,39 @@ Widget button2(
   String str,
   Widget Function() createPage,
 ) {
-  return Container(
+  return SizedBox(
     width: 300,
     child: ElevatedButton(
         style: ButtonStyle(
+            overlayColor: (str.contains("Dart") ||
+                    str.contains("Stream") ||
+                    str.contains("Statefull"))
+                ? MaterialStateProperty.resolveWith<Color?>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return const Color.fromARGB(255, 102, 255, 82);
+                        return null;
+                      }
+                      return null;
+
+                      //<-- SEE HERE
+
+                      // Defer to the widget's default.
+                    },
+                  )
+                : MaterialStateProperty.resolveWith<Color?>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return Color.fromARGB(255, 176, 18, 181);
+                        return null;
+                      }
+                      return null;
+
+                      //<-- SEE HERE
+
+                      // Defer to the widget's default.
+                    },
+                  ),
             backgroundColor: MaterialStatePropertyAll(Colors.teal[400])),
         onPressed: () {
           if (str.contains("Dart") ||
@@ -70,7 +99,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 int? high = 0;
-late int score = 0;
+int score = 0;
 int? best = 0;
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -260,6 +289,7 @@ class Result extends StatefulWidget {
 }
 
 class _ResultState extends State<Result> {
+  // ignore: override_on_non_overriding_member
   @override
   String get resultPhrase {
     String resultText;
@@ -275,65 +305,69 @@ class _ResultState extends State<Result> {
     return resultText;
   }
 
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
       home: Scaffold(
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: double.infinity,
-                child: Image.asset(
-                  "animations/welldone.gif",
+        body: SizedBox(
+          width: double.infinity,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
                   width: double.infinity,
+                  child: Image.asset(
+                    "animations/welldone.gif",
+                    width: double.infinity,
+                  ),
                 ),
               ),
-            ),
-            Text(resultPhrase + '\nYour Score is $high',
-                style: TextStyle(
-                  fontSize: 36.0,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center),
-            Container(
-              width: 200,
-              child: TextButton(
-                  onPressed: () {
-                    high = 0;
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return Quiz1();
-                      },
-                    ));
-                  },
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                          Color.fromARGB(230, 229, 235, 225))),
-                  child: Text('Restart quiz')),
-            ),
-            Padding(padding: EdgeInsets.all(20)),
-            Container(
-              width: 200,
-              child: TextButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                          Color.fromARGB(230, 237, 233, 238))),
-                  onPressed: () {
-                    if (high == 3) {
-                      best = 3;
-                    } else {}
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return MyHomePage();
-                      },
-                    ));
-                  },
-                  child: Text("Return to HOme Page")),
-            ),
-          ],
+              Text('$resultPhrase\nYour Score is $high',
+                  style: TextStyle(
+                    fontSize: 36.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center),
+              SizedBox(
+                width: 200,
+                child: TextButton(
+                    onPressed: () {
+                      high = 0;
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return Quiz1();
+                        },
+                      ));
+                    },
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(
+                            Color.fromARGB(230, 229, 235, 225))),
+                    child: Text('Restart quiz')),
+              ),
+              Padding(padding: EdgeInsets.all(20)),
+              SizedBox(
+                width: 200,
+                child: TextButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(
+                            Color.fromARGB(230, 237, 233, 238))),
+                    onPressed: () {
+                      if (high == 3) {
+                        best = 3;
+                      } else {}
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return MyHomePage();
+                        },
+                      ));
+                    },
+                    child: Text("Return to HOme Page")),
+              ),
+            ],
+          ),
         ),
       ),
     );
