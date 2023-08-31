@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:lottie/lottie.dart';
@@ -52,33 +54,23 @@ Widget button2(
                     (Set<MaterialState> states) {
                       if (states.contains(MaterialState.pressed)) {
                         return const Color.fromARGB(255, 102, 255, 82);
-                        return null;
                       }
                       return null;
-
-                      //<-- SEE HERE
-
-                      // Defer to the widget's default.
                     },
                   )
                 : MaterialStateProperty.resolveWith<Color?>(
                     (Set<MaterialState> states) {
                       if (states.contains(MaterialState.pressed)) {
-                        return Color.fromARGB(255, 176, 18, 181);
-                        return null;
+                        return Color.fromARGB(255, 208, 70, 16);
                       }
                       return null;
-
-                      //<-- SEE HERE
-
-                      // Defer to the widget's default.
                     },
                   ),
             backgroundColor: MaterialStatePropertyAll(Colors.teal[400])),
         onPressed: () {
           if (str.contains("Dart") ||
               str.contains("Stream") ||
-              str.contains("Statefull")) {
+              str.contains("Statefull Widget")) {
             high = high! + 1;
           } else {}
           Navigator.push(context, MaterialPageRoute(
@@ -144,13 +136,13 @@ class _MyHomePageState extends State<MyHomePage> {
               animatedOn: AnimatedOn.onHover,
               onPress: () {
                 high = 0;
+                setState(() {});
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
                     return Quiz1();
                   },
                 ));
               },
-              onChanges: (change) {},
               height: 70,
               width: 200,
               text: 'START QUIZ',
@@ -311,18 +303,14 @@ class _ResultState extends State<Result> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
       home: Scaffold(
-        body: SizedBox(
-          width: double.infinity,
-          child: Column(
+        body: Center(
+          child: ListView(
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Image.asset(
-                    "animations/welldone.gif",
-                    width: double.infinity,
-                  ),
+                child: Container(
+                  child: Image.asset("animations/welldone.gif",
+                      fit: BoxFit.contain),
                 ),
               ),
               Text('$resultPhrase\nYour Score is $high',
@@ -336,6 +324,7 @@ class _ResultState extends State<Result> {
                 child: TextButton(
                     onPressed: () {
                       high = 0;
+                      setState(() {});
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
                           return Quiz1();
@@ -355,9 +344,12 @@ class _ResultState extends State<Result> {
                         backgroundColor: MaterialStatePropertyAll(
                             Color.fromARGB(230, 237, 233, 238))),
                     onPressed: () {
-                      if (high == 3) {
-                        best = 3;
-                      } else {}
+                      best = high;
+                      if (high! >= best!) {
+                        best = high;
+                      } else if (high! < best!) {
+                        best;
+                      }
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
                           return MyHomePage();
