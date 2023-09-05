@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_button/flutter_animated_button.dart';
-import 'package:lottie/lottie.dart';
 
 import 'Homepage.dart';
 import 'Result.dart';

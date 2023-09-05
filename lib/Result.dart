@@ -12,7 +12,6 @@ class Result extends StatefulWidget {
 
 class _ResultState extends State<Result> {
   // ignore: override_on_non_overriding_member
-  @override
   String get resultPhrase {
     String resultText;
     if (high == 3) {
